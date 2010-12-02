@@ -1,6 +1,6 @@
 <?php
 
-include_once "facebook.php";
+//include_once "facebook.php";
 
 class IndexController extends \Zend\Controller\Action{
 
@@ -9,13 +9,16 @@ class IndexController extends \Zend\Controller\Action{
     }
 
     public function indexAction(){	
-
+		
     }
     
-    public function testAction(){
+    public function homeAction(){
     
     }
-
-
+    
+    public function projectsAction(){
+    
+    }
+    
 }
 

@@ -7,14 +7,15 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
     <?php echo $this->headTitle() ?>
     <?php echo $this->headMeta() ?>
     <?php echo $this->headLink() ?>
-    <?php echo $this->headLink()->appendStylesheet('css/style.css') ?>
+    <?php echo $this->headLink()->appendStylesheet('/css/style.css') ?>
     <?php echo $this->headStyle() ?>
     <?php echo $this->headScript() ?>
     <base href="/" />
+    <script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
 </head>
 
 <body id="page-home">
-    <h1>Campaign Connect</h1>
+    <h1>automatic - php code generator</h1>
     <?php echo $this->layout()->content ?>
 </body>
 

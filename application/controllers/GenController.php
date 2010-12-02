@@ -1,4 +1,5 @@
 <?php
+require_once 'Doctrine/Common/ClassLoader.php';
 
 class GenController extends Zend\Controller\Action
 {
@@ -78,4 +79,49 @@ class GenController extends Zend\Controller\Action
 		//Uuuuuhhhhuuuuu!!!
     }
 	
+    public function loadInfoAction(){
+    	$em = \Zend\Registry::get('entitymanager');
+    	$request = $this->getRequest()->getPost();
+    	$this->autoloadDir($request['source']);
+    	$source = array($request['source']);
+    	
+    	try {
+	    	switch ($request['type']) {
+	    		case 'annotations':
+	    			$driver = $em->getConfiguration()->newDefaultAnnotationDriver($source);
+	    			//$driver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($source);
+	    		break;
+	    		case 'yml':
+	    			$driver = new \Doctrine\ORM\Mapping\Driver\YamlDriver($source);
+	    		break;
+	    		case 'xml':
+	    			$driver = new \Doctrine\ORM\Mapping\Driver\XmlDriver($source);
+	    		break;
+	    		case 'php':
+	    			$driver = new \Doctrine\ORM\Mapping\Driver\PHPDriver($source);
+	    		break;
+	    	}
+	    	$em->getConfiguration()->setMetadataDriverImpl($driver);
+	    	$cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($em);
+	    	//$cmf->getAllMetadata();
+			$this->view->classes = $cmf->getAllMetadata();
+	    	$this->render("load-info");
+    	}catch (Exception $e){
+    		
+    		foreach ($e->getTrace() as $trace)
+    			echo 'File: '.$trace['file'].'	Line: '.$trace['line'].'	Class:'.$trace['class']."\n";
+    	
+    	}
+    }
+    
+    public function autoloadDir($dir){
+    	$dirList = scandir($dir);
+    	foreach ($dirList as $dirName){
+    		if(substr($dirName, 0,1)<>'.'){   			
+				$classLoader = new \Doctrine\Common\ClassLoader($dirName, $dir);
+				$classLoader->register();
+    		}
+    	}
+    }
+    
 }
