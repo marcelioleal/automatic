@@ -1,0 +1,33 @@
+<h3>
+	<label>New Project</label>
+</h3>
+<form name="project-new-form" id="project-new-form" enctype="application/x-www-form-urlencoded">
+<dl>
+	<dt>
+		<label>Name:</label>
+		<input type="text" name="name">
+	</dt>
+	<dt>
+		<label>DB Name:</label>
+		<input type="text" name="dbname">
+	</dt>
+	<dt>
+		<label>DB User:</label>
+		<input type="text" name="user">
+	</dt>
+	<dt>
+		<label>DB Password:</label>
+		<input type="password" name="password">
+	</dt>
+	<dt>
+		<input type="button" name="project-create" id="project-create" value="Create">
+	</dt>
+</dl>
+</form>
+<script type="text/javascript">
+<!--
+$('#project-create').click(function(){
+	$.post('/project/create', $('#project-new-form').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
+});
+//-->
+</script>

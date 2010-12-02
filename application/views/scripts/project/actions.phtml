@@ -1,0 +1,8 @@
+<input type="button" name="project-new" id="project-new" value="New Project">
+<script type="text/javascript">
+<!--
+$('#project-new').click(function(){
+	$.get('/project/new'	 , '', function(data){$("#projects-conteiner").html(data);}, 'html');
+});
+//-->
+</script>

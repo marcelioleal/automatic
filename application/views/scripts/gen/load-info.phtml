@@ -1,0 +1,15 @@
+<?php if ($this->classes):?>
+<table>
+  <tr>
+    <th>Class Name</th>
+    <th>Fields Mapped</th>
+  </tr>
+  <?php foreach ($this->classes as $class):?>
+  <tr>
+    <td><?php echo $class->name;?></td>
+    <td><?php echo sizeof($class->fieldMappings)?></td>
+  </tr>
+  <?php endforeach;?>
+</table>
+
+<?php endif;?>

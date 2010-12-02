@@ -1,0 +1,34 @@
+<h3>
+	<label>Mapping Information</label>
+</h3>
+<form name="form-mapping" id="form-mapping" enctype="application/x-www-form-urlencoded" method="post">
+<dl>
+	<dt>
+		<label>Type:</label>
+		<select name="type">
+			<option value="annotations">Annotations</option>
+			<option value="yml">YML</option>
+			<option value="xml">XML</option>
+			<option value="php">PHP Class</option>
+		</select>
+	</dt>
+	<dt>
+		<label>Source:</label>
+		<input type="text" name="source" value="/Users/rmauro/Sites/eventomatica/source/eventomatica/application/models">
+	</dt>
+	<dt>
+		<input type="button" id="button-load" value="Load">
+	</dt>
+</dl>
+</form>
+<div id="details"></div>
+<script type="text/javascript">
+<!--
+$("#button-load").click(function(){
+	$.post("/gen/load-info", $("#form-mapping").serialize(),
+		function(data){
+			$("#details").html(data);
+		}, "html");
+	});
+//-->
+</script>
