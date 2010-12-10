@@ -12,22 +12,20 @@
         	</li>
         	<li>
         		<label>Database User:</label>
-        		<input id=user name=user type=text placeholder="Database User" required>
+        		<input id=user name=user type=text placeholder="Database User" value="<?php print $this->user?>" required>
         	</li>
         	<li>
         		<label>DB Password:</label>
-        		<input id=password name=password type=password required>
-        	</li>
-        	<li>
-        		<input type="button" name="project-create" id="project-create" value="Create">
+        		<input id=password name=password type=password value="<?php print $this->pass?>" required>
         	</li>
         </ul>
+        <input type="button" name="project-save" id="project-save" value="Save">
     </fieldset>
 </form>
 <script type="text/javascript">
 <!--
-$('#project-create').click(function(){
-	$.post('<?php print BASE_URL;?>project/create', $('#newProj').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
+$('#project-save').click(function(){
+	$.post('<?php print BASE_URL;?>project/save', $('#newProj').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
 });
 //-->
 </script>
