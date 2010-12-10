@@ -1,0 +1,15 @@
+<script type="text/javascript">
+<!--
+$('body').ready(function(){
+	$.get('<?php print BASE_URL;?>project/list'	 , '', function(data){$("#projects-list").html(data);}, 'html');
+	$.get('<?php print BASE_URL;?>project/new' , '', function(data){$("#projects-conteiner").html(data);}, 'html');
+});
+//-->
+</script>
+<aside>  
+	<div id="projects-list"></div>
+</aside>
+<section>
+	<div id="projects-actions"></div>
+	<div id="projects-conteiner"></div>  
+</section>  
