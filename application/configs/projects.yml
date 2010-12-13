@@ -1,0 +1,2 @@
+projects:
+  eventomatica: { name: eventomatica, dbname: eventomatica, user: root, password: '', path: /Users/rmauro/Sites/automatic/application/../projects/eventomatica }
