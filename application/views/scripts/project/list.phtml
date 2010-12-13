@@ -1,6 +1,6 @@
-<?php if ($this->dirList):?>
-	<?php foreach ($this->dirList as $dir):?>
-	<?php echo $dir;?>
+<?php if ($this->projects):?>
+	<?php foreach ($this->projects as $project):?>
+	<?php echo $project['name'];?>
 	<?php endforeach;?>
 <?php else:?>
 There is no project site enable.
