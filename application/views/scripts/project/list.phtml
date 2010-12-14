@@ -1,7 +1,10 @@
+<h3>Projects</h3>
+<ul>
 <?php if ($this->projects):?>
 	<?php foreach ($this->projects as $project):?>
-	<?php echo $project['name'];?>
+	    <li><?php echo $project['name'];?></li>
 	<?php endforeach;?>
 <?php else:?>
-There is no project site enable.
+	<li>There is no project site enable.</li>
 <?php endif;?>
+</ul>

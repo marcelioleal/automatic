@@ -1,22 +1,42 @@
-<?php echo $this->doctype() ?>
-<html
-xmlns:fb="http://www.facebook.com/2008/fbml"
->
-
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Automatic Project - http://automatic.sf.net</title>
+	<base href="/automatic/public/" />    
     <?php echo $this->headTitle() ?>
     <?php echo $this->headMeta() ?>
     <?php echo $this->headLink() ?>
-    <?php echo $this->headLink()->appendStylesheet('/css/style.css') ?>
+    <?php echo $this->headLink()->appendStylesheet('css/style.css') ?>
     <?php echo $this->headStyle() ?>
     <?php echo $this->headScript() ?>
-    <base href="/" />
-    <script type="text/javascript" src="/js/jquery-1.4.4.min.js"></script>
-</head>
-
-<body id="page-home">
-    <h1>automatic - php code generator</h1>
+    <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+  </head>
+<body>
+<header id="header">
+    <a href="http://github.com/marcelioleal/automatic">
+    	<img style="position: absolute; top: 0; left: 0; border: 0;" src="images/forkme.png" alt="Fork me on GitHub" />
+    </a>
+  <hgroup class="logo">
+    <!-- <h1><a href="./" title="Automatic"><img src="images/logo.gif" alt="Automatic"></a></h1> -->
+    <h2>Automatic</h2>
+    <h3> The PHP Code Generator with Zend 2, Doctrine 2 and a beautiful architecture.</h3>
+  </hgroup>  
+  <nav>
+      <ul>
+        <li class="active"><a href="./"><span>Home</span></a></li>
+        <li><a href="project/list"><span>Projects</span></a></li>
+        <li><a href="index/config"><span>Configuration</span></a></li>
+        <li><a href="index/howto"><span>How It works</span></a></li>
+        <li><a href="index/about"><span>About</span></a></li>
+      </ul>
+  </nav>
+</header>
+<div id="content">
     <?php echo $this->layout()->content ?>
+</div>  
+<footer>  
+	<p>Copyleft (BSD Lincence)</p>  
+</footer>
 </body>
-
 </html>

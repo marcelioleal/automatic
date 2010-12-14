@@ -1,33 +1,31 @@
-<h3>
-	<label>New Project</label>
-</h3>
-<form name="project-new-form" id="project-new-form" enctype="application/x-www-form-urlencoded">
-<dl>
-	<dt>
-		<label>Name:</label>
-		<input type="text" name="name">
-	</dt>
-	<dt>
-		<label>DB Name:</label>
-		<input type="text" name="dbname">
-	</dt>
-	<dt>
-		<label>DB User:</label>
-		<input type="text" name="user">
-	</dt>
-	<dt>
-		<label>DB Password:</label>
-		<input type="password" name="password">
-	</dt>
-	<dt>
-		<input type="button" name="project-create" id="project-create" value="Create">
-	</dt>
-</dl>
+<form name="project-new-form" id="newProj" enctype="application/x-www-form-urlencoded">
+	<fieldset>
+		<legend>New Project</legend>
+        <ul>
+        	<li>
+        		<label>Name:</label>
+        		<input id=name name=name type=text placeholder="Project_Name" required autofocus>
+        	</li>
+        	<li>
+        		<label>Database Name:</label>
+        		<input id=dbname name=dbname type=text placeholder="Database" required>
+        	</li>
+        	<li>
+        		<label>Database User:</label>
+        		<input id=user name=user type=text placeholder="Database User" value="<?php print $this->user?>" required>
+        	</li>
+        	<li>
+        		<label>DB Password:</label>
+        		<input id=password name=password type=password value="<?php print $this->pass?>" required>
+        	</li>
+        </ul>
+        <input type="button" name="project-save" id="project-save" value="Save">
+    </fieldset>
 </form>
 <script type="text/javascript">
 <!--
-$('#project-create').click(function(){
-	$.post('/project/create', $('#project-new-form').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
+$('#project-save').click(function(){
+	$.post('<?php print BASE_URL;?>project/save', $('#newProj').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
 });
 //-->
 </script>

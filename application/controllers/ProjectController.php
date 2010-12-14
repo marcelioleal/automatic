@@ -5,6 +5,8 @@ use Automatic\Project;
 use Automatic\MapperFactoryGenerator;
 use Automatic\EntityFactoryGenerator;
 use Automatic\AutomaticRepositoryGenerator;
+use Zend\CodeGenerator\Php;
+
 class ProjectController extends \Zend\Controller\Action{
 
     public function init(){
@@ -34,10 +36,15 @@ class ProjectController extends \Zend\Controller\Action{
     }
     
     public function newAction(){
-    
+        $configModel = new Automatic\Configuration();
+        $this->view->driver   = $configModel->getParam("doctrine.db.driver");
+        $this->view->host     = $configModel->getParam("doctrine.db.host");
+        $this->view->user     = $configModel->getParam("doctrine.db.user");
+        $this->view->pass     = $configModel->getParam("doctrine.db.password");
     }
     
     public function createAction(){
+
     	$request = $this->getRequest()->getPost();
     	$project = new Project();
     	$project->create($request['name'], $request['dbname'], $request['user'], $request['password']);
@@ -52,6 +59,7 @@ class ProjectController extends \Zend\Controller\Action{
     	$model->generateBM();
     	
         /*
+
 		$config = new Doctrine\ORM\Configuration();
 
 		$cache = new \Doctrine\Common\Cache\ApcCache;
@@ -68,10 +76,12 @@ class ProjectController extends \Zend\Controller\Action{
     	$options = array('dbname' => $request['dbname'],
     					 'user' => $request['user'],
     					 'password' => $request['password'],
-    					 'host' => '127.0.0.1',
+    					 #TODO: Global Parameter
+    					 'host' => '127.0.0.1', 
     					 'driver' => 'pdo_mysql');
     	$project = $request['name'];
     	$projectDir = APPLICATION_PATH.'/projects/'.$project;
+
     	if($em = Doctrine\ORM\EntityManager::create($options, $config)){
 	    	$classes = $this->getClassesMetadata($em);
 	    	$this->createProject($projectDir);
@@ -80,6 +90,9 @@ class ProjectController extends \Zend\Controller\Action{
 	    	$this->generateEntityFactory($classes, $projectDir);
 	    	$this->generateMappers($classes, $projectDir);
 	    	$this->generateMapperFactory($classes, $projectDir);
+	    	
+	    	$this->generateControllers($classes, $projectDir);
+	    	//$this->generateInterfaces($classes, $projectDir);
     	}
     	*/
     }
@@ -119,21 +132,25 @@ class ProjectController extends \Zend\Controller\Action{
 	}
 	
 	public function getClassesMetadata($em){
-		$em->getConfiguration()->setMetadataDriverImpl(
-		    new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
-		        $em->getConnection()->getSchemaManager()
-		    )
-		);		
-		$cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($em);
-
-		$classes = $cmf->getAllMetadata();
-		foreach ($classes as $class){
-			$class->customRepositoryClassName = 'Mapper\\'.$class->name;
-			$class->name = 'Entities\\'.$class->name;
-			$class->rootEntityName = $class->name;
-		}
+		try{
+    	    $em->getConfiguration()->setMetadataDriverImpl(
+    		    new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
+    		        $em->getConnection()->getSchemaManager()
+    		    )
+    		);		
+    		$cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($em);
+    
+    		$classes = $cmf->getAllMetadata();
+    		foreach ($classes as $class){
+    			$class->customRepositoryClassName = 'Mapper\\'.$class->name;
+    			$class->name = 'Entities\\'.$class->name;
+    			$class->rootEntityName = $class->name;
+    		}
 		
-		return $classes;
+		    return $classes;
+		}catch (Exception $e){
+		    print $e->getMessage();
+		}
 	}
 	
 	public function generateEntities($classes, $projectDir){
@@ -165,6 +182,37 @@ class ProjectController extends \Zend\Controller\Action{
 	public function generateMapperFactory($classes, $projectDir){
 		$factory = new MapperFactoryGenerator($classes, $projectDir);
 		$factory->generate();
+	}
+	
+	public function generateControllers($classes,$projectDir){
+	    foreach ($classes as $metadata) {
+	        // Configuring after instantiation
+            $method = new Php\PhpMethod();
+            $method->setName('addAction')
+                   ->setBody('echo \'Hello world!\';');
+             
+            $class = new Php\PhpClass();
+            $class->setName(substr($class->name))
+                  ->setMethod($method);
+             
+            $file = new Php\PhpFile();
+            $file->setClass($class);
+            
+            $outputDir = $projectDir.'/application/controllers'; 
+            $fullClassName = "TesteController";
+            
+            $path = $outputDir.DIRECTORY_SEPARATOR.str_replace('\\', \DIRECTORY_SEPARATOR, $fullClassName) . '.php';
+            // or write it to a file:
+            $dir = dirname($path);
+    
+            if ( ! is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+    
+            if ( ! file_exists($path)) {
+               file_put_contents($path, $file->generate());
+            }
+	    }
 	}
 }
 

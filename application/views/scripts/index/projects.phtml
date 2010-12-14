@@ -4,8 +4,8 @@
 <script type="text/javascript">
 <!--
 $('body').ready(function(){
-	$.get('/project/list'	 , '', function(data){$("#projects-list").html(data);}, 'html');
-	$.get('/project/actions' , '', function(data){$("#projects-actions").html(data);}, 'html');
+	$.get('<?php print BASE_URL;?>project/list'	 , '', function(data){$("#projects-list").html(data);}, 'html');
+	$.get('<?php print BASE_URL;?>project/actions' , '', function(data){$("#projects-actions").html(data);}, 'html');
 });
 //-->
 </script>

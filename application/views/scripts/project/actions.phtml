@@ -2,7 +2,7 @@
 <script type="text/javascript">
 <!--
 $('#project-new').click(function(){
-	$.get('/project/new'	 , '', function(data){$("#projects-conteiner").html(data);}, 'html');
+	$.get('<?php print BASE_URL;?>project/new'	 , '', function(data){$("#projects-conteiner").html(data);}, 'html');
 });
 //-->
 </script>
