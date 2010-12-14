@@ -1,7 +1,7 @@
 <?php
 
-use Automatic\Model;
-use Automatic\Project;
+use Automatic\Generator\Model;
+use Automatic\Generator\Project;
 use Automatic\MapperFactoryGenerator;
 use Automatic\EntityFactoryGenerator;
 use Automatic\AutomaticRepositoryGenerator;
