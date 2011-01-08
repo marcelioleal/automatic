@@ -164,9 +164,8 @@ form#newProj {
     	margin-right: 5px;
     }
 		
-		
-/*		form#newProj > fieldset > legend:before {
-		    content: "Step " counter(fieldsets) ": ";
-		    counter-increment: fieldsets;
-		}*/
+	div#howto > fieldset > legend:before {
+	    content: "Step " counter(fieldsets) ": ";
+	    counter-increment: fieldsets;
+	}
 		

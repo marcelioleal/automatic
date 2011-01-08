@@ -1,0 +1,26 @@
+<fieldset>
+	<legend>Project <?php print $this->project->name?></legend>
+	<ul>
+		<li>Last generation:</li>
+		<li>Settings</li>
+	</ul>
+</fieldset>
+<fieldset>
+	<legend>Entities (<?php print count($this->classes)?>)</legend>
+	<ul>
+		<?php foreach ($this->classes as $class):?>
+        	<li><?php echo $class->rootEntityName;?> (<?php echo sizeof($class->fieldMappings)?>)</li>
+        <?php endforeach;?>
+	</ul>
+</fieldset>
+<form name="project-gen-form" id="genProj" enctype="application/x-www-form-urlencoded" action="post">
+	<input type="hidden" name="project" id="project" value="<?php print $this->project->name?>">
+	<input type="button" name="project-gen" id="project-gen" value="Generate Now!">
+</form>
+<script type="text/javascript">
+<!--
+$('#project-gen').click(function(){
+	$.post('<?php print BASE_URL;?>project/generate', $('#genProj').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
+});
+//-->
+</script>

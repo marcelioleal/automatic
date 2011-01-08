@@ -18,21 +18,25 @@ class Model
     {
         $this->project = $project;
         
+        #TODO: Smell Code - Refactoring
+        //Doctrine Configurations
         $config = new \Doctrine\ORM\Configuration();
         $cache = new \Doctrine\Common\Cache\ApcCache;
         $config->setMetadataCacheImpl($cache);
         $driverImpl = $config->newDefaultAnnotationDriver(APPLICATION_PATH . '/models');
         $config->setMetadataDriverImpl($driverImpl);
-
         $config->setQueryCacheImpl($cache);
         $config->setProxyDir(APPLICATION_PATH . '/proxies');
         $config->setProxyNamespace('Application\Proxies');
 
-        $options = array('dbname' => $this->project->options['dbname'],
-                         'user' => $this->project->options['user'],
-                         'password' => $this->project->options['password'],
-                         'host' => '127.0.0.1',
-                         'driver' => 'pdo_mysql');
+        //General Configurations
+        $configModel = new \Automatic\Configuration();
+        
+        $options = array('dbname'     => $this->project->options['dbname'],
+                         'user'       => $this->project->options['user'],
+                         'password'   => $this->project->options['password'],
+                         'host'       => $configModel->getParam("doctrine.db.host"),
+                         'driver'     => $configModel->getParam("doctrine.db.driver"));
 
         $this->entityManager = \Doctrine\ORM\EntityManager::create($options, $config);
         $this->loadMetadata();
@@ -46,16 +50,19 @@ class Model
             )
         );		
         $cmFactory = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($this->entityManager);
+        try{
+            $classes = $cmFactory->getAllMetadata();
         
-        $classes = $cmFactory->getAllMetadata();
-        foreach ($classes as $class)
-        {
-            $class->customRepositoryClassName = 'Mapper\\'.$class->name;
-            $class->name = 'Entities\\'.$class->name;
-            $class->rootEntityName = $class->name;
+            foreach ($classes as $class)
+            {
+                $class->customRepositoryClassName = 'Mapper\\'.$class->name;
+                $class->rootEntityName = $class->name;
+                $class->name = 'Entities\\'.$class->name;
+            }
+            $this->metadata = $classes;
+        }catch (Exception $e){
+            print $e->getMessage();
         }
-        
-        $this->metadata = $classes;
     }
     
     public function generateEntities()
@@ -197,6 +204,7 @@ class Model
             $class->setMethod($update);
            
             $file = new PhpFile();
+            #TODO: Change Zend Framework
             $file->setUse('Mapper\MapperFactory'); 
             $file->setClass($class);
             File::save($this->project->path.'/application/models/BM/'.$class->getName().'.php', $file->generate());

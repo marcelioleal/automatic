@@ -2,9 +2,14 @@
 <ul>
 <?php if ($this->projects):?>
 	<?php foreach ($this->projects as $project):?>
-	    <li><?php echo $project['name'];?></li>
+	    <li><a href="#" id="project-load" onclick="javascript:redirect('<?php echo $project['name'];?>')"><?php echo $project['name'];?></a></li>
 	<?php endforeach;?>
 <?php else:?>
 	<li>There is no project site enable.</li>
 <?php endif;?>
 </ul>
+<script type="text/javascript">
+    function redirect(name){ 
+    	$.post('<?php print BASE_URL;?>project/info/project/'+name, '', function(data){$("#projects-conteiner").html(data);}, 'html');
+    }
+</script>
