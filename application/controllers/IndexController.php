@@ -34,6 +34,10 @@ class IndexController extends \Zend\Controller\Action{
     
     }
     
+    public function howtoAction(){
+    
+    }
+    
     public function projectsAction(){
     
     }

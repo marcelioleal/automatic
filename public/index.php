@@ -12,10 +12,13 @@ defined('APPLICATION_ENV')
 defined('BASE_URL')
     || define('BASE_URL', '/automatic/public/');
 
+    
+#TODO: Adicionar a pasta do Symfony dinamicamente a partir do include_path do doctrine    
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
     realpath(APPLICATION_PATH . '/../../library'),
+    realpath(APPLICATION_PATH . '/../../library/Doctrine'),
     realpath(APPLICATION_PATH . '/../application/models'),
     get_include_path(),
 )));

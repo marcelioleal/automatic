@@ -30,9 +30,8 @@ class Configuration{
     
     public function setParam($param,$value){
         try{
-            print $value;
             eval(str_replace(".","->",'$this->_generalConfig->'.APPLICATION_ENV.'->'.$param).' = $value;');
-            //if(!$value)
+            if(!$value)
                 eval(str_replace(".","->",'$this->_generalConfig->production->'.$param).'= $value;');
         }catch (Exception $e){
             print $e->getMessage();

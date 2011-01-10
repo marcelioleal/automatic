@@ -14,25 +14,7 @@ class ProjectController extends \Zend\Controller\Action{
     }
 
     public function indexAction(){
-    
-    }
-    
-    public function listAction(){
         
-        $projects = Project::loadProjects();
-        $this->view->projects = $projects['projects'];
-        /*
-    	$projectsDir = APPLICATION_PATH.'/projects';
-    	$list = scandir($projectsDir);
-    	$this->view->dirList = array();
-    	foreach ($list as $item) {
-    		if(substr($item, 0,1)<>'.')
-    			$this->view->dirList[] = $item;
-    	}*/
-    }
-   
-    public function actionsAction(){
-    
     }
     
     public function newAction(){
@@ -41,6 +23,55 @@ class ProjectController extends \Zend\Controller\Action{
         $this->view->host     = $configModel->getParam("doctrine.db.host");
         $this->view->user     = $configModel->getParam("doctrine.db.user");
         $this->view->pass     = $configModel->getParam("doctrine.db.password");
+    }
+    
+    public function listAction(){
+        $projects = Project::loadProjects();
+        $this->view->projects = $projects['projects'];
+    }
+   
+    public function saveAction(){
+        $inputs = $this->getRequest()->getParams();
+        if($inputs["name"]){ 
+            $project = new Project();
+            $project->create($inputs["name"],$inputs["dbname"],$inputs["user"],$inputs["password"]);
+        }
+        Zend\Controller\Front::getInstance()->setParam('noViewRenderer', true);
+        #TODO: Valide Project
+        #TODO: Update list of projects
+        $this->_redirector = $this->_helper->getHelper('Redirector');
+        $this->_redirector->gotoSimple('info',
+                                       'project',
+                                       null,
+                                       array('project' => $project->name)
+                                       );
+    }
+    
+    public function infoAction(){
+        $inputs = $this->getRequest()->getParams();
+    	$project = Project::load($inputs['project']);
+        $model = new Model($project);
+        $this->view->classes = $model->metadata;
+        $project->metadata =  $model->metadata;
+        $this->view->project = $project;
+        
+    }
+    
+    public function generateAction(){
+        $inputs = $this->getRequest()->getPost();
+    	$project = new Project();
+    	$project = Project::load($inputs['project']);
+    	$project->configure();
+    	$project->generate();
+    	
+        $model = new Model($project);
+        $model->generateEntities();
+    	$model->generateEntityFactory();
+    	$model->generateMappers();
+    	$model->generateMapperFactory();
+    	$model->generateBM();
+    	Zend\Controller\Front::getInstance()->setParam('noViewRenderer', true);
+    	print "Success!";
     }
     
     public function createAction(){

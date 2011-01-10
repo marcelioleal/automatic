@@ -3,6 +3,9 @@ namespace Automatic\Generator;
 use \Symfony\Component\Yaml\Yaml;
 use \Util\File;
 
+
+#TODO: This Class is responsible for 2 or more aspects
+#TODO: This Class needs a refactoring now!!!
 class Project
 {
     public $name;
@@ -12,11 +15,17 @@ class Project
     public $projectsFile;
     public $structure;
     
-    public function __construct()
+    public function __construct($options = null)
     {
         $this->templatesFile = APPLICATION_PATH.'/templates';
         $this->projectsFile = APPLICATION_PATH.'/configs/projects.yml';
         $this->structure = Yaml::load(__DIR__.'/../../templates/structure.yml');
+        
+        if($options){
+            $this->options = $options;
+            $this->name = $options['name'];
+            $this->path = $options['path'];
+        }
     }
 
     public static function loadProjects()
@@ -52,9 +61,10 @@ class Project
     
     public static function load($name)
     {
-        $project = new self();
-        $projects = $project->loadProjects();
-        return ($options = $projects['projects'][$name])?$options: false;
+        $projects = Project::loadProjects();
+        $options  = $projects['projects'][$name];
+        $project  = new Project($options);
+        return $project;
     }
     
     public static function factory($name='', $dbname='', $user='', $password='', $path='')
