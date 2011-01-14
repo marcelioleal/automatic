@@ -1,5 +1,6 @@
 <?php
 namespace Automatic\Generator;
+
 use \Zend\CodeGenerator\Php\PhpClass;
 use \Zend\CodeGenerator\Php\PhpMethod;
 use \Zend\CodeGenerator\Php\PhpParameter;
@@ -11,58 +12,18 @@ use \Util\File;
 class Model
 {
     public $project;
-    public $entityManager;
-    public $metadata;
     
     public function __construct($project)
     {
         $this->project = $project;
-        
-        #TODO: Smell Code - Refactoring
-        //Doctrine Configurations
-        $config = new \Doctrine\ORM\Configuration();
-        $cache = new \Doctrine\Common\Cache\ApcCache;
-        $config->setMetadataCacheImpl($cache);
-        $driverImpl = $config->newDefaultAnnotationDriver(APPLICATION_PATH . '/models');
-        $config->setMetadataDriverImpl($driverImpl);
-        $config->setQueryCacheImpl($cache);
-        $config->setProxyDir(APPLICATION_PATH . '/proxies');
-        $config->setProxyNamespace('Application\Proxies');
-
-        //General Configurations
-        $configModel = new \Automatic\Configuration();
-        
-        $options = array('dbname'     => $this->project->options['dbname'],
-                         'user'       => $this->project->options['user'],
-                         'password'   => $this->project->options['password'],
-                         'host'       => $configModel->getParam("doctrine.db.host"),
-                         'driver'     => $configModel->getParam("doctrine.db.driver"));
-
-        $this->entityManager = \Doctrine\ORM\EntityManager::create($options, $config);
-        $this->loadMetadata();
     }
     
-    public function loadMetadata()
-    {
-        $this->entityManager->getConfiguration()->setMetadataDriverImpl(
-            new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
-                $this->entityManager->getConnection()->getSchemaManager()
-            )
-        );		
-        $cmFactory = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($this->entityManager);
-        try{
-            $classes = $cmFactory->getAllMetadata();
-        
-            foreach ($classes as $class)
-            {
-                $class->customRepositoryClassName = 'Mapper\\'.$class->name;
-                $class->rootEntityName = $class->name;
-                $class->name = 'Entities\\'.$class->name;
-            }
-            $this->metadata = $classes;
-        }catch (Exception $e){
-            print $e->getMessage();
-        }
+    public function generate(){
+        $this->generateEntities();
+    	$this->generateEntityFactory();
+    	$this->generateMappers();
+    	$this->generateMapperFactory();
+    	$this->generateBM();
     }
     
     public function generateEntities()
@@ -72,7 +33,7 @@ class Model
         $generator->setGenerateStubMethods(true); 
         $generator->setRegenerateEntityIfExists(false); 
         $generator->setUpdateEntityIfExists(true);
-        $generator->generate($this->metadata, $this->project->path.'/application/models');
+        $generator->generate($this->project->metadata, $this->project->path.'/application/models');
     }
     
     public function generateEntityFactory()
@@ -81,7 +42,7 @@ class Model
         $class->setNamespaceName('Entities');
         $class->setName('EntityFactory');
         
-        foreach ($this->metadata as $metadata) 
+        foreach ($this->project->metadata as $metadata) 
         {
 		    $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));
             $method = new PhpMethod();
@@ -107,7 +68,7 @@ class Model
     public function generateMappers()
     {
         File::copy($this->project->templatesFile.'/BaseMapper.php', $this->project->path.'/application/models/Mapper/BaseMapper.php');
-        foreach ($this->metadata as $metadata)
+        foreach ($this->project->metadata as $metadata)
         {
             $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));
             $class = new PhpClass();
@@ -131,7 +92,7 @@ class Model
         $method->setStatic(true);
         $method->setBody('return \Zend\Registry::get("entitymanager");');
         $class->setMethod($method);
-        foreach ($this->metadata as $metadata) 
+        foreach ($this->project->metadata as $metadata) 
         {
 		    $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));
             $method = new PhpMethod();
@@ -149,7 +110,7 @@ class Model
     
     public function generateBM()
     {
-        foreach ($this->metadata as $metadata)
+        foreach ($this->project->metadata as $metadata)
         {
             
             $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));

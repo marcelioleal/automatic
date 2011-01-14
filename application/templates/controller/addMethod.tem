@@ -1,0 +1,10 @@
+	try{
+		$inputs = $this->getRequest()->getPost();
+		
+		$<<entity>> = EntityFactory::Create<<Entity>>(<<params>>);
+			
+		$<<entity>>BM = new \BM\<<Entity>>();
+		$<<entity>>BM->insert($<<entity>>);
+	}catch (Exception $e){
+		$this->view->errors = Messages::getMessage("GENERAL", "GENERIC_ERROR");
+	}
