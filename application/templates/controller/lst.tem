@@ -1,0 +1,2 @@
+		$customerBM = new \BM\Customer();
+    	$this->view->customers = $customerBM->getActives();
