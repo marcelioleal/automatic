@@ -23,8 +23,8 @@ class Project
     {
         $this->templatesFile = APPLICATION_PATH.'/templates';
         $this->projectsFile = APPLICATION_PATH.'/configs/projects.yml';
-        $this->structure = Yaml::load($this->templatesFile.'/structure.yml');
         
+        $this->structure = Yaml::load($this->templatesFile.'/structure.yml');
         if($options){
             $this->options = $options;
             $this->name = $options['name'];

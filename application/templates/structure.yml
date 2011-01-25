@@ -7,12 +7,21 @@ application:
     BM:
   views:
     helpers:
-  scripts:
-    error:
-    index:
+    scripts:
+      error:
+      index:
 docs:
 library:
 public:
 tests:
   application:
-  library:
+    controllers:
+    models:
+      Entities:
+      Mapper:
+      BM:
+    views:
+      helpers:
+      scripts:
+        error:
+        index:

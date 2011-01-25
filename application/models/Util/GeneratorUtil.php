@@ -34,4 +34,13 @@ class GeneratorUtil{
         File::save($path, $file->generate());
     }
     
+    public static function saveHTMLFile($html,$path,$file){
+        File::createDir($path);
+        File::save($path.$file, $html);
+    }
+    
+    public static function replace($i,$o,$str){
+        return str_replace($i,$o,$str);
+    }
+    
 }

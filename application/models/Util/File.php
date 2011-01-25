@@ -38,4 +38,8 @@ class File
     {
         copy($filename, $destination);
     }
+    
+    public static function copyContent($templateName){
+        return file_get_contents(__DIR__."/../../templates/".$templateName.".tem");
+    } 
 }
