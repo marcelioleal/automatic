@@ -1,6 +1,6 @@
-<form name="add<Class>" id="add<Class>" enctype="application/x-www-form-urlencoded" method="post">
+<form name="<action><Class>" id="<action><Class>" enctype="application/x-www-form-urlencoded" method="post">
 	<fieldset>
-		<legend><Class></legend>
+		<legend><Action> <Class></legend>
         <ul>
 <fields>
         </ul>
