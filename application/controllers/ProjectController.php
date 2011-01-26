@@ -3,6 +3,7 @@
 use Automatic\Generator;
 use Automatic\Generator\Project;
 use Automatic\Generator\Model;
+use Automatic\Generator\View;
 use Automatic\Generator\Controller;
 
 use Automatic\MapperFactoryGenerator;
@@ -72,9 +73,9 @@ class ProjectController extends \Zend\Controller\Action{
     	$controller = new Controller($project);
     	$controller->generate();
     	
-//    	$view = new View($project);
-//    	$view->generate();
-//    	
+    	$view = new View($project);
+    	$view->generate();
+    	
 //    	$js = new JS($project);
 //    	$js->generate();
 //    	

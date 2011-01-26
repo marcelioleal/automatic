@@ -1,0 +1,9 @@
+<form name="<action><Class>" id="<action><Class>" enctype="application/x-www-form-urlencoded" method="post">
+	<fieldset>
+		<legend><Action> <Class></legend>
+        <ul>
+<fields>
+        </ul>
+        <input type="submit" name="save" id="save" value="Save">
+    </fieldset>
+</form>
