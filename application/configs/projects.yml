@@ -1,2 +1,9 @@
 projects:
   eventomatica: { name: eventomatica, dbname: eventomatica, user: root, password: '', path: /Users/rmauro/Sites/automatic/application/../projects/eventomatica }
+  aisjsoajoi: { name: aisjsoajoi, dbname: jiosajsio, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../projects/aisjsoajoi }
+  ihiuhiu: { name: ihiuhiu, dbname: ihuih, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../projects/ihiuhiu }
+  asojdio: { name: asojdio, dbname: iojdsaioj, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../projects/asojdio }
+  Campaign: { name: Campaign, dbname: campaign, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../projects/Campaign }
+  Campaign2: { name: Campaign2, dbname: campaign, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../projects/Campaign2 }
+  Content: { name: Content, dbname: congresso, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../projects/Content }
+  aojsoaj: { name: aojsoaj, dbname: ajaaojso, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../projects/aojsoaj }
