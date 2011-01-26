@@ -8,13 +8,13 @@ class Bootstrap extends \Zend\Application\Bootstrap {
 
 		$config = new Configuration();
 
-		$cache = new \Doctrine\Common\Cache\ApcCache;
-		$config->setMetadataCacheImpl($cache);
+		//$cache = new \Doctrine\Common\Cache\ApcCache;
+		//$config->setMetadataCacheImpl($cache);
 
 		$driverImpl = $config->newDefaultAnnotationDriver(APPLICATION_PATH . '/models');
 		$config->setMetadataDriverImpl($driverImpl);
 
-		$config->setQueryCacheImpl($cache);
+		//$config->setQueryCacheImpl($cache);
 		$config->setProxyDir(APPLICATION_PATH . '/proxies');
 		$config->setProxyNamespace('Application\Proxies');
 
