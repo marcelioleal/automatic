@@ -67,8 +67,8 @@ class ProjectController extends \Zend\Controller\Action{
     	$project->generate();
     	$project->configure();
     	
-//        $model = new Model($project);
-//        $model->generate();    
+        $model = new Model($project);
+        $model->generate();    
     	
     	$controller = new Controller($project);
     	$controller->generate();

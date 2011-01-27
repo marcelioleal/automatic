@@ -11,11 +11,13 @@ class View implements Generator
     
     public $project;
     public $templatesDir;
+    public $viewPath;
     
     function __construct($project)
     {
         $this->project = $project;
         $this->templatesDir = "view/";
+        $this->viewPath = $this->project->path.'/application/views/scripts/';
     }
     
     public function add($class)
@@ -32,7 +34,7 @@ class View implements Generator
         }
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         
-        GeneratorUtil::saveHTMLFile($viewTemplate,$this->project->path.'/application/views/'.strtolower($class->name).'/','add.phtml');
+        GeneratorUtil::saveHTMLFile($viewTemplate,$this->viewPath.strtolower($class->name).'/','add.phtml');
     }
     
     public function edit($class)
@@ -50,7 +52,7 @@ class View implements Generator
         }
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         
-        GeneratorUtil::saveHTMLFile($viewTemplate,$this->project->path.'/application/views/'.strtolower($class->name).'/','edit.phtml');
+        GeneratorUtil::saveHTMLFile($viewTemplate,$this->viewPath.strtolower($class->name).'/','edit.phtml');
     }
     
     public function view($class)
@@ -67,7 +69,7 @@ class View implements Generator
         }
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         
-        GeneratorUtil::saveHTMLFile($viewTemplate,$this->project->path.'/application/views/'.strtolower($class->name).'/','view.phtml');
+        GeneratorUtil::saveHTMLFile($viewTemplate,$this->viewPath.strtolower($class->name).'/','view.phtml');
     }
     
     public function listClass($class)
@@ -89,7 +91,7 @@ class View implements Generator
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         $viewTemplate = GeneratorUtil::replace("<values>",$values,$viewTemplate);
         
-        GeneratorUtil::saveHTMLFile($viewTemplate,$this->project->path.'/application/views/'.strtolower($class->name).'/','list.phtml');
+        GeneratorUtil::saveHTMLFile($viewTemplate,$this->viewPath.strtolower($class->name).'/','list.phtml');
     }
     
     

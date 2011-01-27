@@ -28,12 +28,19 @@ class Model
     
     public function generateEntities()
     {
+        $newMeta = array();
+        foreach ($this->project->metadata as $metadata)
+        {
+          $new = clone $metadata;
+          $new->name = 'Entities\\'.$new->name;
+          $newMeta[] = $new;  
+        } 
         $generator = new \Doctrine\ORM\Tools\EntityGenerator(); 
         $generator->setGenerateAnnotations(true); 
         $generator->setGenerateStubMethods(true); 
         $generator->setRegenerateEntityIfExists(false); 
         $generator->setUpdateEntityIfExists(true);
-        $generator->generate($this->project->metadata, $this->project->path.'/application/models');
+        $generator->generate($newMeta, $this->project->path.'/application/models');
     }
     
     public function generateEntityFactory()
@@ -41,24 +48,52 @@ class Model
         $class = new PhpClass();
         $class->setNamespaceName('Entities');
         $class->setName('EntityFactory');
+        $parameters = array();
         
         foreach ($this->project->metadata as $metadata) 
         {
-		    $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));
+		    $name = strtolower($metadata->name);
             $method = new PhpMethod();
             $method->setName($name);
             $method->setStatic(true);
-            $body = '$'.$name.' = new '.ucfirst($name).";\n"; 
+            $body = '$'.$name.' = new '.ucfirst($name).";\n";
+                echo '<pre>'.$metadata->name;
+                print_r($metadata->fieldMappings);
+                echo '</pre>'; 
             foreach ($metadata->fieldNames as $field)
             {
-                $param = new PhpParameter();
-                $param->setName($field);
-                $method->setParameter($param);
+                if((!$metadata->isIdentifier($field))||($metadata->isIdentifierNatural($field)))
+                {
+                    $param = new PhpParameter();
+                    $param->setName($field);
+                    if($metadata->isNullable($field)) $param->setDefaultValue(null);
+                    $method->setParameter($param);
+                    $body .= '$'.$name.'->set'.ucfirst($field).'($'.$field.')'.";\n";
+                }
+            }
+            /*
+             * TODO: Definir padr‹o para geracao de objetos dentro de objetos
+            foreach ($metadata->getAssociationMappings() as $mapping)
+            {
+                $field = $mapping['fieldName'];
+                //$param = new PhpParameter();
+                //$param->setName($field);
+                //$method->setParameter($param);
+                if($pars = $parameters[$field])
+                {
+                    foreach ($pars as $par2) {
+                        $par = clone $par2;
+                        $par->setName($field.ucfirst($par->getName()));
+                        $method->setParameter($par);
+                    }
+                }
                 $body .= '$'.$name.'->set'.ucfirst($field).'($'.$field.')'.";\n";
             }
+            */
             $body .= "return \$$name;\n";
             $method->setBody($body);
             $class->setMethod($method);
+            $parameters[$name] = $method->getParameters();
         }
         $file = new PhpFile(); 
         $file->setClass($class);
@@ -70,7 +105,7 @@ class Model
         File::copy($this->project->templatesFile.'/BaseMapper.php', $this->project->path.'/application/models/Mapper/BaseMapper.php');
         foreach ($this->project->metadata as $metadata)
         {
-            $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));
+            $name = strtolower($metadata->name);
             $class = new PhpClass();
             $class->setNamespaceName('Mapper');
             $class->setName(ucfirst($name));
@@ -94,7 +129,7 @@ class Model
         $class->setMethod($method);
         foreach ($this->project->metadata as $metadata) 
         {
-		    $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));
+		    $name = strtolower($metadata->name);
             $method = new PhpMethod();
             $method->setName($name);
             $method->setStatic(true);
@@ -113,7 +148,7 @@ class Model
         foreach ($this->project->metadata as $metadata)
         {
             
-            $name = strtolower(substr($metadata->name,strpos($metadata->name, '\\')+1));
+            $name = strtolower($metadata->name);
             $class = new PhpClass();
             $class->setNamespaceName('BM');
             $class->setName(ucfirst($name));

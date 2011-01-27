@@ -1,4 +1,4 @@
-        	<li>
-        		<label><Field>:</label>
-        		<input id='<field>' name='<field>' type='<type>' placeholder='<default>' value='<value>' <required>>
-        	</li>
+            <li>
+                <label><Field>:</label>
+                <input id='<field>' name='<field>' type='<type>' placeholder='<default>' value='<value>' <required>>
+            </li>

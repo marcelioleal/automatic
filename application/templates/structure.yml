@@ -14,14 +14,3 @@ docs:
 library:
 public:
 tests:
-  application:
-    controllers:
-    models:
-      Entities:
-      Mapper:
-      BM:
-    views:
-      helpers:
-      scripts:
-        error:
-        index:
