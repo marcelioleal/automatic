@@ -1,0 +1,53 @@
+		<h2>Deputado</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Iddeputado</th>
+					<th>Matricula</th>
+					<th>Name</th>
+					<th>Partido</th>
+					<th>Estado</th>
+					<th>Pk</th>
+
+					<th>View</th>
+					<th>Edit</th>
+					<th>Del</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach($this->listDeputado as $<class>):
+			?>
+				<tr>
+					<td><?php print $deputado->getIddeputado(); ?></td>
+					<td><?php print $deputado->getMatricula(); ?></td>
+					<td><?php print $deputado->getName(); ?></td>
+					<td><?php print $deputado->getPartido(); ?></td>
+					<td><?php print $deputado->getEstado(); ?></td>
+					<td><?php print $deputado->getPk(); ?></td>
+					
+					<td>
+						<a href="<class>/view/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_view.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/edit/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_ed.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/del/id/<?php print $<class>->getId();?>">
+							<img src="public/images/bt_del.jpg"/>
+						</a>
+					</td>
+				</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+		<div class="paginator">
+			<?php
+				if (isset($this->listDeputado))
+					print $this->paginationControl($this->listDeputado, "All", "component/paginator.phtml");
+			?>
+		</div><!--end paginator-->

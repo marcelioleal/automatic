@@ -1,0 +1,53 @@
+		<h2>Reuniao</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Idreuniao</th>
+					<th>Comissao</th>
+					<th>Tiporeuniao</th>
+					<th>Data</th>
+					<th>Presenca</th>
+					<th>Posto</th>
+
+					<th>View</th>
+					<th>Edit</th>
+					<th>Del</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach($this->listReuniao as $<class>):
+			?>
+				<tr>
+					<td><?php print $reuniao->getIdreuniao(); ?></td>
+					<td><?php print $reuniao->getComissao(); ?></td>
+					<td><?php print $reuniao->getTiporeuniao(); ?></td>
+					<td><?php print $reuniao->getData(); ?></td>
+					<td><?php print $reuniao->getPresenca(); ?></td>
+					<td><?php print $reuniao->getPosto(); ?></td>
+					
+					<td>
+						<a href="<class>/view/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_view.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/edit/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_ed.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/del/id/<?php print $<class>->getId();?>">
+							<img src="public/images/bt_del.jpg"/>
+						</a>
+					</td>
+				</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+		<div class="paginator">
+			<?php
+				if (isset($this->listReuniao))
+					print $this->paginationControl($this->listReuniao, "All", "component/paginator.phtml");
+			?>
+		</div><!--end paginator-->

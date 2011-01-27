@@ -1,0 +1,51 @@
+		<h2>Votacao</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Idvotacao</th>
+					<th>Data</th>
+					<th>Sessao</th>
+					<th>Projeto</th>
+					<th>Voto</th>
+
+					<th>View</th>
+					<th>Edit</th>
+					<th>Del</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach($this->listVotacao as $<class>):
+			?>
+				<tr>
+					<td><?php print $votacao->getIdvotacao(); ?></td>
+					<td><?php print $votacao->getData(); ?></td>
+					<td><?php print $votacao->getSessao(); ?></td>
+					<td><?php print $votacao->getProjeto(); ?></td>
+					<td><?php print $votacao->getVoto(); ?></td>
+					
+					<td>
+						<a href="<class>/view/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_view.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/edit/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_ed.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/del/id/<?php print $<class>->getId();?>">
+							<img src="public/images/bt_del.jpg"/>
+						</a>
+					</td>
+				</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+		<div class="paginator">
+			<?php
+				if (isset($this->listVotacao))
+					print $this->paginationControl($this->listVotacao, "All", "component/paginator.phtml");
+			?>
+		</div><!--end paginator-->

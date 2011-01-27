@@ -1,0 +1,37 @@
+<form name="editRelatoria" id="editRelatoria" enctype="application/x-www-form-urlencoded" method="post">
+	<fieldset>
+		<legend>Edit Relatoria</legend>
+        <ul>
+        	<li>
+        		<label>Idrelatoria:</label>
+        		<input id='idrelatoria' name='idrelatoria' type='text' placeholder='' value='<?php print $relatoria->getIdrelatoria(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Numero:</label>
+        		<input id='numero' name='numero' type='text' placeholder='' value='<?php print $relatoria->getNumero(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Orgao:</label>
+        		<input id='orgao' name='orgao' type='text' placeholder='' value='<?php print $relatoria->getOrgao(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Situacao:</label>
+        		<input id='situacao' name='situacao' type='text' placeholder='' value='<?php print $relatoria->getSituacao(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Autor:</label>
+        		<input id='autor' name='autor' type='text' placeholder='' value='<?php print $relatoria->getAutor(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Ementa:</label>
+        		<input id='ementa' name='ementa' type='text' placeholder='' value='<?php print $relatoria->getEmenta(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Despacho:</label>
+        		<input id='despacho' name='despacho' type='text' placeholder='' value='<?php print $relatoria->getDespacho(); ?>' required>
+        	</li>
+
+        </ul>
+        <input type="submit" name="save" id="save" value="Save">
+    </fieldset>
+</form>

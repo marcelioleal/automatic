@@ -1,0 +1,37 @@
+<form name="editProposicao" id="editProposicao" enctype="application/x-www-form-urlencoded" method="post">
+	<fieldset>
+		<legend>Edit Proposicao</legend>
+        <ul>
+        	<li>
+        		<label>Idproposicao:</label>
+        		<input id='idproposicao' name='idproposicao' type='text' placeholder='' value='<?php print $proposicao->getIdproposicao(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Numero:</label>
+        		<input id='numero' name='numero' type='text' placeholder='' value='<?php print $proposicao->getNumero(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Orgao:</label>
+        		<input id='orgao' name='orgao' type='text' placeholder='' value='<?php print $proposicao->getOrgao(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Situacao:</label>
+        		<input id='situacao' name='situacao' type='text' placeholder='' value='<?php print $proposicao->getSituacao(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Data:</label>
+        		<input id='data' name='data' type='text' placeholder='' value='<?php print $proposicao->getData(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Ementa:</label>
+        		<input id='ementa' name='ementa' type='text' placeholder='' value='<?php print $proposicao->getEmenta(); ?>' required>
+        	</li>
+        	<li>
+        		<label>Despacho:</label>
+        		<input id='despacho' name='despacho' type='text' placeholder='' value='<?php print $proposicao->getDespacho(); ?>' required>
+        	</li>
+
+        </ul>
+        <input type="submit" name="save" id="save" value="Save">
+    </fieldset>
+</form>

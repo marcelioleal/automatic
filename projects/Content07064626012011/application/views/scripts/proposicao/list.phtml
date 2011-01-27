@@ -1,0 +1,55 @@
+		<h2>Proposicao</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Idproposicao</th>
+					<th>Numero</th>
+					<th>Orgao</th>
+					<th>Situacao</th>
+					<th>Data</th>
+					<th>Ementa</th>
+					<th>Despacho</th>
+
+					<th>View</th>
+					<th>Edit</th>
+					<th>Del</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+			foreach($this->listProposicao as $<class>):
+			?>
+				<tr>
+					<td><?php print $proposicao->getIdproposicao(); ?></td>
+					<td><?php print $proposicao->getNumero(); ?></td>
+					<td><?php print $proposicao->getOrgao(); ?></td>
+					<td><?php print $proposicao->getSituacao(); ?></td>
+					<td><?php print $proposicao->getData(); ?></td>
+					<td><?php print $proposicao->getEmenta(); ?></td>
+					<td><?php print $proposicao->getDespacho(); ?></td>
+					
+					<td>
+						<a href="<class>/view/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_view.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/edit/id/<?php print $<class>->getId;?>">
+							<img src="public/images/bt_ed.jpg"/>
+						</a>
+					</td>
+					<td>
+						<a href="<class>/del/id/<?php print $<class>->getId();?>">
+							<img src="public/images/bt_del.jpg"/>
+						</a>
+					</td>
+				</tr>
+			<?php endforeach;?>
+			</tbody>
+		</table>
+		<div class="paginator">
+			<?php
+				if (isset($this->listProposicao))
+					print $this->paginationControl($this->listProposicao, "All", "component/paginator.phtml");
+			?>
+		</div><!--end paginator-->

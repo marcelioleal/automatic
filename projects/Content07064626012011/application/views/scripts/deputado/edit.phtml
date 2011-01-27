@@ -1,0 +1,33 @@
+<form name="editDeputado" id="editDeputado" enctype="application/x-www-form-urlencoded" method="post">
+	<fieldset>
+		<legend>Edit Deputado</legend>
+        <ul>
+            <li>
+                <label>Iddeputado:</label>
+                <input id='iddeputado' name='iddeputado' type='text' placeholder='' value='<?php print $deputado->getIddeputado(); ?>' required>
+            </li>
+            <li>
+                <label>Matricula:</label>
+                <input id='matricula' name='matricula' type='text' placeholder='' value='<?php print $deputado->getMatricula(); ?>' required>
+            </li>
+            <li>
+                <label>Name:</label>
+                <input id='name' name='name' type='text' placeholder='' value='<?php print $deputado->getName(); ?>' required>
+            </li>
+            <li>
+                <label>Partido:</label>
+                <input id='partido' name='partido' type='text' placeholder='' value='<?php print $deputado->getPartido(); ?>' required>
+            </li>
+            <li>
+                <label>Estado:</label>
+                <input id='estado' name='estado' type='text' placeholder='' value='<?php print $deputado->getEstado(); ?>' required>
+            </li>
+            <li>
+                <label>Pk:</label>
+                <input id='pk' name='pk' type='text' placeholder='' value='<?php print $deputado->getPk(); ?>' required>
+            </li>
+
+        </ul>
+        <input type="submit" name="save" id="save" value="Save">
+    </fieldset>
+</form>
