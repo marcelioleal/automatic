@@ -1,18 +1,26 @@
 <?php
 
+//namespace Controller;
+
 //include_once "facebook.php";
+use Util\Controller;
 
-class IndexController extends \Zend\Controller\Action{
+class IndexController extends Controller
+{
 
-    public function init(){
-        /* Initialize action controller here */
+    public function init()
+    {
+        /* Initialize action controller here */    
     }
 
-    public function indexAction(){	
-		
+    public function indexAction()
+    {	
+
     }
     
-    public function configAction(){	
+    #TODO: Refactoting - Move to BM
+    public function configAction()
+    {	
         $configModel = new Automatic\Configuration();
 
         $request = $this->getRequest(); 
@@ -42,5 +50,8 @@ class IndexController extends \Zend\Controller\Action{
     
     }
     
+    public function aboutAction(){
+    
+    }
 }
 

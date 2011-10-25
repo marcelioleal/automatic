@@ -52,11 +52,14 @@ class ProjectController extends \Zend\Controller\Action{
     }
     
     public function infoAction(){
+        
         $inputs = $this->getRequest()->getParams();
+
     	$project = Generator\Project::load($inputs['project']);
-        $model = new Generator\Model($project);
+    	
+    	$model = new Generator\Model($project);
         $this->view->classes = $project->metadata;
-        $this->view->project = $project;
+        $this->view->project = $project;    
         
     }
     

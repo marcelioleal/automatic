@@ -11,7 +11,11 @@ class File
     
     public static function save($name, $content)
     {
-        file_put_contents($name, $content);
+        try{
+            return file_put_contents($name, $content);
+        }catch (Exception $e){
+            print $e->getMessage();
+        }
     }
     
     public static function createTree($tree, $root)

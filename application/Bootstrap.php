@@ -22,9 +22,11 @@ class Bootstrap extends \Zend\Application\Bootstrap {
 
 		$config->setAutoGenerateProxyClasses($options['auto_generate_proxy_class']);
 		
-		$em = EntityManager::create($options['db'], $config);
-    	
-		\Zend\Registry::set('entitymanager',$em);
+		$em         = EntityManager::create($options['db'], $config);
+    	$configApp  = new \Zend\Config\Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+		
+		\Zend\Registry::set('entitymanager',$em);        
+		\Zend\Registry::set('config', $configApp);
 		
 		return $em;
 	}

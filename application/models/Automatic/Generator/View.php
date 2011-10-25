@@ -2,8 +2,11 @@
 
 namespace Automatic\Generator;
 
+use Automatic\Util\Mapper;
+
 use \Util\GeneratorUtil;
 use \Util\File;
+use \Automatic\Util;
 
 
 class View implements Generator
@@ -27,10 +30,12 @@ class View implements Generator
         
         $fields = "";
         foreach ($class->fieldNames as $field){
-            $viewF = File::copyContent($this->templatesDir."input");
-            $array = array("<field>" => $field,"<Field>" => ucfirst($field),"<type>" => "text","<default>" => "", "<value>" => "","<required>" => "required");
-            $viewF = GeneratorUtil::replaceAll($array,$viewF);
-            $fields .= $viewF;
+            if(!Mapper::isPKSequence($class,$field)){
+                $viewF = File::copyContent($this->templatesDir."input");
+                $array = array("<field>" => $field,"<Field>" => ucfirst($field),"<type>" => "text","<default>" => "", "<value>" => "","<required>" => "required");
+                $viewF = GeneratorUtil::replaceAll($array,$viewF);
+                $fields .= $viewF;
+            }
         }
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         
@@ -44,11 +49,13 @@ class View implements Generator
         
         $fields = "";
         foreach ($class->fieldNames as $field){
-            $viewF = File::copyContent($this->templatesDir."input");
-            $value = '<?php print $'.lcfirst($class->name).'->get'.ucfirst($field).'(); ?>';
-            $array = array("<field>" => $field,"<Field>" => ucfirst($field),"<type>" => "text","<default>" => "", "<value>" => $value,"<required>" => "required");
-            $viewF = GeneratorUtil::replaceAll($array,$viewF);
-            $fields .= $viewF;
+            if(!Mapper::isPKSequence($class,$field)){
+                $viewF = File::copyContent($this->templatesDir."input");
+                $value = '<?php print $'.lcfirst($class->name).'->get'.ucfirst($field).'(); ?>';
+                $array = array("<field>" => $field,"<Field>" => ucfirst($field),"<type>" => "text","<default>" => "", "<value>" => $value,"<required>" => "required");
+                $viewF = GeneratorUtil::replaceAll($array,$viewF);
+                $fields .= $viewF;
+            }
         }
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         
@@ -62,10 +69,12 @@ class View implements Generator
         
         $fields = "";
         foreach ($class->fieldNames as $field){
-            $viewF = File::copyContent($this->templatesDir."detailField");
-            $value = '<?php print $'.lcfirst($class->name).'->get'.ucfirst($field).'(); ?>';
-            $viewF = GeneratorUtil::replaceAll(array("<Field>" => ucfirst($field),"<value>" => $value),$viewF);
-            $fields .= $viewF;
+            if(!Mapper::isPKSequence($class,$field)){
+                $viewF = File::copyContent($this->templatesDir."detailField");
+                $value = '<?php print $'.lcfirst($class->name).'->get'.ucfirst($field).'(); ?>';
+                $viewF = GeneratorUtil::replaceAll(array("<Field>" => ucfirst($field),"<value>" => $value),$viewF);
+                $fields .= $viewF;
+            }
         }
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         
@@ -79,14 +88,16 @@ class View implements Generator
         
         $fields = $values = "";
         foreach ($class->fieldNames as $field){
-            $viewF  = File::copyContent($this->templatesDir."listField");
-            $viewF  = GeneratorUtil::replaceAll(array("<Field>" => ucfirst($field)),$viewF);
-            
-            $viewV  = File::copyContent($this->templatesDir."valueList");
-            $viewV  = GeneratorUtil::replaceAll(array("<value>" => '<?php print $'.lcfirst($class->name).'->get'.ucfirst($field).'(); ?>'),$viewV);
-            
-            $fields .= $viewF;
-            $values .= $viewV;
+            if(!Mapper::isPKSequence($class,$field)){
+                $viewF  = File::copyContent($this->templatesDir."listField");
+                $viewF  = GeneratorUtil::replaceAll(array("<Field>" => ucfirst($field)),$viewF);
+                
+                $viewV  = File::copyContent($this->templatesDir."valueList");
+                $viewV  = GeneratorUtil::replaceAll(array("<value>" => '<?php print $'.lcfirst($class->name).'->get'.ucfirst($field).'(); ?>'),$viewV);
+                
+                $fields .= $viewF;
+                $values .= $viewV;
+            }
         }
         $viewTemplate = GeneratorUtil::replace("<fields>",$fields,$viewTemplate);
         $viewTemplate = GeneratorUtil::replace("<values>",$values,$viewTemplate);

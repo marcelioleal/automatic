@@ -72,7 +72,7 @@ class Model
                 }
             }
             /*
-             * TODO: Definir padr‹o para geracao de objetos dentro de objetos
+             * TODO: Definir padrï¿½o para geracao de objetos dentro de objetos
             foreach ($metadata->getAssociationMappings() as $mapping)
             {
                 $field = $mapping['fieldName'];

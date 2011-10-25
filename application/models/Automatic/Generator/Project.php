@@ -10,6 +10,7 @@ use \Util\File;
 class Project
 {
     public $name;
+    public $basePath;
     public $path;
     public $options;
     public $templatesFile;
@@ -21,8 +22,9 @@ class Project
     
     public function __construct($options = null)
     {
-        $this->templatesFile = APPLICATION_PATH.'/templates';
-        $this->projectsFile = APPLICATION_PATH.'/configs/projects.yml';
+        $this->basePath         = APPLICATION_PATH.'/../data/projects/';
+        $this->templatesFile    = APPLICATION_PATH.'/templates';
+        $this->projectsFile     = APPLICATION_PATH.'/../data/projects/projects.yml';
         
         $this->structure = Yaml::load($this->templatesFile.'/structure.yml');
         if($options){
@@ -51,10 +53,12 @@ class Project
                          'host'       => $configModel->getParam("doctrine.db.host"),
                          'driver'     => $configModel->getParam("doctrine.db.driver")
                    );
-
-        $this->entityManager = \Doctrine\ORM\EntityManager::create($options, $config);
-        
-        $this->loadMetadata();
+        try{
+            $this->entityManager = \Doctrine\ORM\EntityManager::create($options, $config);
+            $this->loadMetadata();
+        }catch (Exception $e){
+            print "aqui";
+        }
     }
     
     public function loadMetadata()
@@ -64,10 +68,11 @@ class Project
                 $this->entityManager->getConnection()->getSchemaManager()
             )
         );		
-        $cmFactory = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($this->entityManager);
+        
+        $cmFactory = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory();
+        $cmFactory->setEntityManager($this->entityManager);
         try{
             $classes = $cmFactory->getAllMetadata();
-        
             foreach ($classes as $class){
                 $class->customRepositoryClassName = 'Mapper\\'.$class->name;
                 $class->name = $class->name;
@@ -87,7 +92,7 @@ class Project
     public function create($name, $dbname, $user, $password, $path='')
     {
         $this->name = $name;
-        $this->path = ($path)?$path:APPLICATION_PATH.'/../projects/'.$name;
+        $this->path = ($path)?$path:$this->basePath.$name;
         $this->options = self::factory($name, $dbname, $user, $password, $this->path);
         $projects = self::loadProjects();
         $projects['projects'][$this->name] = $this->options; 

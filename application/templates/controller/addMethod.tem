@@ -1,10 +1,16 @@
 	try{
-		$inputs = $this->getRequest()->getPost();
+		$inputs = $this->getRequest()->getParams();
+
+        if($this->getRequest()->isPost()){
+            $<<entity>> = EntityFactory::Create<<Entity>>(<<params>>);
+            $<<entity>>BM = new \BM\<<Entity>>();
+            $<<entity>>BM->add($<<entity>>);
+
+            $this->flashMessenger->addMessage(Util\Message::get("GENERAL","SUCCESS")); 
+            $this->_redirect('<<entity>>/list');
+		}
 		
-		$<<entity>> = EntityFactory::Create<<Entity>>(<<params>>);
-			
-		$<<entity>>BM = new \BM\<<Entity>>();
-		$<<entity>>BM->insert($<<entity>>);
 	}catch (Exception $e){
-		$this->view->errors = Messages::getMessage("GENERAL", "GENERIC_ERROR");
+		$this->flashMessenger->addMessage('Erro:'.$e->getMessage());
 	}
+	

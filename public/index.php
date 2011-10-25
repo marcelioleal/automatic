@@ -26,11 +26,15 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 /** Zend_Application */
 require_once 'Zend/Application/Application.php';
+try{
+    // Create application, bootstrap, and run
+    $application = new Zend\Application\Application (
+        APPLICATION_ENV,
+        APPLICATION_PATH . '/configs/application.ini'
+    );
+    $application->bootstrap()
+                ->run();
+}catch(Exception $e){
+    print $e->getMessage();
+}
 
-// Create application, bootstrap, and run
-$application = new Zend\Application\Application (
-    APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.ini'
-);
-$application->bootstrap()
-            ->run();
