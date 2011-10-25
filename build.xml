@@ -44,14 +44,16 @@
         </apply>
     </target>
 
-    <target name="phploc" description="Measure project size using PHPLOC">
+    <!-- <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
             <arg value="--log-csv" />
             <arg value="${basedir}/build/logs/phploc.csv" />
             <arg path="${basedir}/application" />
-            <!-- And the JS codes developed ? -->
+            
         </exec>
     </target>
+     -->
+     <!-- And the JS codes developed ? -->
 
     <target name="pdepend" description="Calculate software metrics using PHP_Depend">
         <exec executable="pdepend">
@@ -114,7 +116,7 @@
     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec executable="phpunit" failonerror="true"/>
+        <exec executable="phpunit" failonerror="false"/>
         <!-- <exec executable="phpunit" failonerror="false"/>  -->
     </target>
 
