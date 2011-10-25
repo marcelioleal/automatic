@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="automatic" default="build">
+
+    <property name="phpbin" value="/Users/marcelioleal/Sites/library/bin" />
+    
     <target name="build" depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdoc,phpunit,phpcb"/>
     <target name="build-parallel" depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
     <target name="tools-parallel" description="Run tools in parallel">
@@ -45,7 +48,7 @@
     </target>
 
     <target name="phploc" description="Measure project size using PHPLOC">
-        <exec executable="/Users/marcelioleal/Sites/library/bin/phploc">
+        <exec executable="${phpbin}/phploc">
             <arg value="--log-csv" />
             <arg value="${basedir}/build/logs/phploc.csv" />
             <arg path="${basedir}/application" />
@@ -53,7 +56,7 @@
     </target>
 
     <target name="pdepend" description="Calculate software metrics using PHP_Depend">
-        <exec executable="pdepend">
+        <exec executable="${phpbin}/pdepend">
             <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
             <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
             <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
@@ -62,7 +65,7 @@
     </target>
 
     <target name="phpmd" description="Perform project mess detection using PHPMD">
-        <exec executable="phpmd">
+        <exec executable="${phpbin}/phpmd">
             <arg path="${basedir}/application" />
             <arg value="text" />
             <arg value="${basedir}/build/phpmd.xml" />
@@ -70,7 +73,7 @@
     </target>
 
     <target name="phpmd-ci" description="Perform project mess detection using PHPMD">
-        <exec executable="phpmd">
+        <exec executable="${phpbin}/phpmd">
             <arg path="${basedir}/application" />
             <arg value="xml" />
             <arg value="${basedir}/build/phpmd.xml" />
@@ -80,14 +83,14 @@
     </target>
 
     <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer">
-        <exec executable="phpcs">
+        <exec executable="${phpbin}/phpcs">
             <arg value="--standard=${basedir}/build/phpcs.xml" />
             <arg path="${basedir}/application" />
         </exec>
     </target>
 
     <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer">
-            <exec executable="phpcs" output="/dev/null">
+            <exec executable="${phpbin}/phpcs" output="/dev/null">
             <arg value="--report=checkstyle" />
             <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
             <arg value="--standard=${basedir}/build/phpcs.xml" />
@@ -96,7 +99,7 @@
     </target>
 
     <target name="phpcpd" description="Find duplicate code using PHPCPD">
-            <exec executable="phpcpd">
+            <exec executable="${phpbin}/phpcpd">
             <arg value="--log-pmd" />
             <arg value="${basedir}/build/logs/pmd-cpd.xml" />
             <arg path="${basedir}/application" />
@@ -104,7 +107,7 @@
     </target>
 
     <target name="phpdoc" description="Generate API documentation using PHPDocumentor">
-            <exec executable="phpdoc">
+            <exec executable="${phpbin}/phpdoc">
             <arg value="--directory" />
             <arg path="${source}" />
             <arg value="--target" />
@@ -113,12 +116,12 @@
     </target>
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
-        <exec executable="phpunit" failonerror="false"/>
+        <exec executable="${phpbin}/phpunit" failonerror="false"/>
         <!-- <exec executable="phpunit" failonerror="false"/>  -->
     </target>
 
     <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser">
-        <exec executable="phpcb">
+        <exec executable="${phpbin}/phpcb">
             <arg value="--log" />
             <arg path="${basedir}/build/logs" />
             <arg value="--source" />
