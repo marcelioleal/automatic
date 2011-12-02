@@ -1,0 +1,5 @@
+projects:
+  campaing: { name: campaing, dbname: campaing, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../data/projects/campaing }
+  onsee: { name: onsee, dbname: onsee, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../data/projects/onsee }
+  artepara: { name: artepara, dbname: artepara, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../data/projects/artepara }
+  consultaobra: { name: consultaobra, dbname: consultaobra, user: root, password: '', path: /Users/marcelioleal/Sites/automatic/application/../data/projects/consultaobra }

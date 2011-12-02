@@ -4,6 +4,7 @@
         <ul>
 <fields>
         </ul>
+<<hidden>>        
         <input type="submit" name="save" id="save" value="Save">
     </fieldset>
 </form>

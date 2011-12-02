@@ -1,0 +1,6 @@
+	try{
+    	$mapper<<Entity>>  			= \Mapper\MapperFactory::<<entity>>();
+        $this->view->list<<Entity>> = $mapper<<Entity>>->findAll();
+    }catch (Exception $e){
+		$this->flashMessenger->addMessage('Erro:'.$e->getMessage());
+	}

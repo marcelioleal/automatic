@@ -64,11 +64,16 @@ class ProjectController extends \Zend\Controller\Action{
     }
     
     public function generateAction(){
-        $inputs = $this->getRequest()->getPost();
+        Zend\Controller\Front::getInstance()->setParam('noViewRenderer', true);
+        
+        $inputs = $this->getRequest()->getParams();
+        
+        #TODO: refactoring. Multiple responsabilities
     	$project = new Generator\Project();
     	$project = Project::load($inputs['project']);
     	$project->generate();
     	$project->configure();
+    	//$project->generateBuild();
     	
         $model = new Model($project);
         $model->generate();    
@@ -85,7 +90,7 @@ class ProjectController extends \Zend\Controller\Action{
 //    	$test = new Test($project);
 //    	$test->generate();
     	
-    	Zend\Controller\Front::getInstance()->setParam('noViewRenderer', true);
+
     	print "Success!";
     }
 	

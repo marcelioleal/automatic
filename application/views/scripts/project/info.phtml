@@ -14,13 +14,12 @@
 	</ul>
 </fieldset>
 <form name="project-gen-form" id="genProj" enctype="application/x-www-form-urlencoded" action="post">
-	<input type="hidden" name="project" id="project" value="<?php print $this->project->name?>">
 	<input type="button" name="project-gen" id="project-gen" value="Generate Now!">
 </form>
 <script type="text/javascript">
 <!--
 $('#project-gen').click(function(){
-	$.post('<?php print BASE_URL;?>project/generate', $('#genProj').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
+	$.post('<?php print BASE_URL;?>project/generate/project/<?php print $this->project->name?>', $('#genProj').serialize(), function(data){$("#projects-conteiner").html(data);}, 'html');
 });
 //-->
 </script>

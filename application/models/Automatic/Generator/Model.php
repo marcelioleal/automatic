@@ -57,16 +57,16 @@ class Model
             $method->setName($name);
             $method->setStatic(true);
             $body = '$'.$name.' = new '.ucfirst($name).";\n";
-                echo '<pre>'.$metadata->name;
-                print_r($metadata->fieldMappings);
-                echo '</pre>'; 
+//                echo '<pre>'.$metadata->name;
+//                print_r($metadata->fieldMappings);
+//                echo '</pre>'; 
             foreach ($metadata->fieldNames as $field)
             {
                 if((!$metadata->isIdentifier($field))||($metadata->isIdentifierNatural($field)))
                 {
                     $param = new PhpParameter();
                     $param->setName($field);
-                    if($metadata->isNullable($field)) $param->setDefaultValue(null);
+                    //if($metadata->isNullable($field)) $param->setDefaultValue(null);
                     $method->setParameter($param);
                     $body .= '$'.$name.'->set'.ucfirst($field).'($'.$field.')'.";\n";
                 }
@@ -102,7 +102,6 @@ class Model
     
     public function generateMappers()
     {
-        File::copy($this->project->templatesFile.'/BaseMapper.php', $this->project->path.'/application/models/Mapper/BaseMapper.php');
         foreach ($this->project->metadata as $metadata)
         {
             $name = strtolower($metadata->name);
@@ -133,7 +132,7 @@ class Model
             $method = new PhpMethod();
             $method->setName($name);
             $method->setStatic(true);
-            $body = 'return new '.ucfirst($name)."(self::entityManager(), self::entityManager()->getClassMetadata('".$metadata->name."'));\n";
+            $body = 'return new '.ucfirst($name)."(self::entityManager(), self::entityManager()->getClassMetadata('\Entities\\".$metadata->name."'));\n";
             $method->setBody($body);
             $class->setMethod($method);
         }
@@ -159,7 +158,7 @@ class Model
             
             $construct = new PhpMethod();
             $construct->setName('__construct');
-            $construct->setBody('$this->'.$name.'Map = MapperFactory::'.$name.'();');
+            $construct->setBody('$this->'.$name.'Map = \Mapper\MapperFactory::'.$name.'();');
             $class->setMethod($construct);
             
             $entParam = new PhpParameter();

@@ -1,0 +1,15 @@
+	$this->_helper->layout->disableLayout();
+    $this->_helper->viewRenderer->setNoRender();
+	try{
+        $inputs = $this->getRequest()->getParams();
+        $id 	= $inputs['id'];
+        $<<entity>> = \Mapper\MapperFactory::<<entity>>()->find($id);
+        $<<entity>>BM = new \BM\<<Entity>>();
+        $<<entity>>BM->delete($<<entity>>);
+        
+        $this->flashMessenger->addMessage(Util\Message::get("GENERAL","SUCCESS")); 
+        $this->_redirect('<<entity>>/list');
+	}catch (Exception $e){
+		$this->flashMessenger->addMessage('Erro:'.$e->getMessage());
+	}	
+     

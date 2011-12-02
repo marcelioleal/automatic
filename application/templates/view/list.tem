@@ -13,20 +13,20 @@
 			foreach($this->list<Class> as $<class>):
 			?>
 				<tr>
-<values>					
+<values>			
 					<td>
-						<a href="<class>/view/id/<?php print $<class>->getId;?>">
-							<img src="public/images/bt_view.jpg"/>
+						<a href="<?php print BASE_URL;?><class>/view/id/<?php print $<class>->getId();?>">
+							view<!--<img src="public/images/bt_view.jpg"/>-->
 						</a>
 					</td>
 					<td>
-						<a href="<class>/edit/id/<?php print $<class>->getId;?>">
-							<img src="public/images/bt_ed.jpg"/>
+						<a href="<?php print BASE_URL;?><class>/edit/id/<?php print $<class>->getId();?>">
+							edit<!--<img src="public/images/bt_ed.jpg"/>-->
 						</a>
 					</td>
 					<td>
-						<a href="<class>/del/id/<?php print $<class>->getId();?>">
-							<img src="public/images/bt_del.jpg"/>
+						<a href="<?php print BASE_URL;?><class>/del/id/<?php print $<class>->getId();?>">
+							del<!--<img src="public/images/bt_del.jpg"/>-->
 						</a>
 					</td>
 				</tr>
@@ -35,7 +35,7 @@
 		</table>
 		<div class="paginator">
 			<?php
-				if (isset($this->list<Class>))
-					print $this->paginationControl($this->list<Class>, "All", "component/paginator.phtml");
+				/*if (isset($this->list<Class>))
+					print $this->paginationControl($this->list<Class>, "All", "component/paginator.phtml");*/
 			?>
 		</div><!--end paginator-->

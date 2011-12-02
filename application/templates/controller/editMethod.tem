@@ -4,11 +4,16 @@
         if($this->getRequest()->isPost()){
             $<<entity>> = \Entities\EntityFactory::<<entity>>(<<params>>);
             $<<entity>>BM = new \BM\<<Entity>>();
-            $<<entity>>BM->insert($<<entity>>);
+            $<<entity>>BM->update($<<entity>>);
 
             $this->flashMessenger->addMessage(Util\Message::get("GENERAL","SUCCESS")); 
             $this->_redirect('<<entity>>/list');
+		}else{
+            $id = $inputs['id'];
+            $this->view-><<entity>>  = \Mapper\MapperFactory::<<entity>>()->find($id);
+            $this->view->id			 = $id;
 		}
+		
 	}catch (Exception $e){
 		$this->flashMessenger->addMessage('Erro:'.$e->getMessage());
 	}

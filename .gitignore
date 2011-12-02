@@ -1,5 +1,5 @@
 .buildpath
 .project
 .settings/
-.data/
-.build/
+build/
+data/projects/

@@ -24,7 +24,7 @@ class Project
     {
         $this->basePath         = APPLICATION_PATH.'/../data/projects/';
         $this->templatesFile    = APPLICATION_PATH.'/templates';
-        $this->projectsFile     = APPLICATION_PATH.'/../data/projects/projects.yml';
+        $this->projectsFile     = APPLICATION_PATH.'/../data/projects.yml';
         
         $this->structure = Yaml::load($this->templatesFile.'/structure.yml');
         if($options){
@@ -57,7 +57,7 @@ class Project
             $this->entityManager = \Doctrine\ORM\EntityManager::create($options, $config);
             $this->loadMetadata();
         }catch (Exception $e){
-            print "aqui";
+            print $e->getMessage();
         }
     }
     
@@ -102,6 +102,41 @@ class Project
     public function generate()
     {  
       File::createTree($this->structure, $this->path);
+      $this->copyFiles();
+    }
+    
+    public function copyFiles()
+    {
+        File::copy(APPLICATION_PATH.'/templates/Bootstrap.php', $this->path.'/application/Bootstrap.php');
+        
+        //File::copy(APPLICATION_PATH.'/templates/public/index.php', $this->path.'/public/index.php');
+        $fileContent = File::load(APPLICATION_PATH.'/templates/public/index.php');
+        $fileContent = str_replace('<<project>>', $this->name, $fileContent);
+        File::save($this->path.'/public/index.php', $fileContent);
+        
+        File::copy(APPLICATION_PATH.'/templates/public/.htaccess', $this->path.'/public/.htaccess');
+        
+        File::copy(APPLICATION_PATH.'/templates/controller/IndexController.php', $this->path.'/application/controllers/IndexController.php');
+        File::copy(APPLICATION_PATH.'/templates/controller/ErrorController.php', $this->path.'/application/controllers/ErrorController.php');
+        
+        File::copy(APPLICATION_PATH.'/templates/mapper/BaseMapper.php', $this->path.'/application/models/Mapper/BaseMapper.php');
+        
+        File::copy(APPLICATION_PATH.'/templates/util/AdapterQuery.php', $this->path.'/application/models/Util/AdapterQuery.php');
+        File::copy(APPLICATION_PATH.'/templates/util/Controller.php', $this->path.'/application/models/Util/Controller.php');
+        File::copy(APPLICATION_PATH.'/templates/util/Enum.php', $this->path.'/application/models/Util/Enum.php');
+        File::copy(APPLICATION_PATH.'/templates/util/Exception.php', $this->path.'/application/models/Util/Exception.php');
+        File::copy(APPLICATION_PATH.'/templates/util/File.php', $this->path.'/application/models/Util/File.php');
+        File::copy(APPLICATION_PATH.'/templates/util/Message.php', $this->path.'/application/models/Util/Message.php');
+        File::copy(APPLICATION_PATH.'/templates/util/Util.php', $this->path.'/application/models/Util/Util.php');
+        
+        File::copy(APPLICATION_PATH.'/templates/view/default.phtml', $this->path.'/application/views/layouts/default.phtml');
+        File::copy(APPLICATION_PATH.'/templates/view/error.phtml', $this->path.'/application/views/scripts/error/error.phtml');
+        File::copy(APPLICATION_PATH.'/templates/view/index.phtml', $this->path.'/application/views/scripts/index/index.phtml');
+        
+        File::copy(APPLICATION_PATH.'/templates/images/bt_add.jpg', $this->path.'/public/images/bt_add.jpg');
+        File::copy(APPLICATION_PATH.'/templates/images/bt_ed.jpg', $this->path.'/public/images/bt_ed.jpg');
+        File::copy(APPLICATION_PATH.'/templates/images/bt_list.jpg', $this->path.'/public/images/bt_list.jpg');
+        
     }
     
     public function configure()
@@ -110,8 +145,7 @@ class Project
         $fileContent = str_replace('%DBNAME%', $this->options['dbname'], $fileContent);
         $fileContent = str_replace('%USERNAME%', $this->options['user'], $fileContent);
         $fileContent = str_replace('%PASSWORD%', $this->options['password'], $fileContent);
-        File::save($this->path.'/application/configs/application.ini', $fileContent);
-        File::copy(APPLICATION_PATH.'/templates/Bootstrap.php', $this->path.'/application/Bootstrap.php');
+        File::save($this->path.'/application/conf/application.ini', $fileContent);
     }
     
     public static function load($name)

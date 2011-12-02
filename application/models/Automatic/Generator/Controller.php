@@ -2,6 +2,7 @@
 
 namespace Automatic\Generator;
 
+use Automatic\Util\Mapper;
 use \Zend\CodeGenerator\Php\PhpClass;
 use \Zend\CodeGenerator\Php\PhpMethod;
 use \Zend\CodeGenerator\Php\PhpParameter;
@@ -10,6 +11,7 @@ use \Zend\CodeGenerator\Php\PhpFile;
 use \Zend\Reflection\ReflectionClass;
 
 use \Util\GeneratorUtil;
+use \Util\File;
 
 
 class Controller implements Generator{
@@ -28,33 +30,61 @@ class Controller implements Generator{
     }
     
     public function getBodyPostDispatch($metadata){
-        $methodTemplate = File::copyContent($this->templatesDir."postDispatchMethod");
+        $methodTemplate = File::copyContent($this->templatesDir."postDispacthMethod");
         return $methodTemplate;
     }
     
     public function getBodyAdd($metadata){
-        return $metadata->name;
+        $bodyTemplate = File::copyContent($this->templatesDir."addMethod");
+        $bodyTemplate = GeneratorUtil::replaceAll(array("<<entity>>" => lcfirst($metadata->name),"<<Entity>>" => ucfirst($metadata->name)),$bodyTemplate);
+        
+        $fields = "";
+        foreach ($metadata->fieldNames as $field){
+            if(!Mapper::isPKSequence($metadata,$field)){
+                $fields[] = '$inputs[\''.$field.'\']';
+            }
+        }
+        $bodyTemplate = GeneratorUtil::replace("<<params>>",implode($fields,","),$bodyTemplate);
+        
+        return $bodyTemplate;
     }
     
     public function getBodyEdit($metadata){
-        return $metadata->name;
+        $bodyTemplate = File::copyContent($this->templatesDir."editMethod");
+        $bodyTemplate = GeneratorUtil::replaceAll(array("<<entity>>" => lcfirst($metadata->name),"<<Entity>>" => ucfirst($metadata->name)),$bodyTemplate);
+        
+        $fields = "";
+        foreach ($metadata->fieldNames as $field){
+            if(!Mapper::isPKSequence($metadata,$field)){
+                $fields[] = '$inputs[\''.$field.'\']';
+            }
+        }
+        $bodyTemplate = GeneratorUtil::replace("<<params>>",implode($fields,","),$bodyTemplate);
+        
+        return $bodyTemplate;
     }
     
     public function getBodyDel($metadata){
-        return $metadata->name;
+        $bodyTemplate = File::copyContent($this->templatesDir."delMethod");
+        $bodyTemplate = GeneratorUtil::replaceAll(array("<<entity>>" => lcfirst($metadata->name),"<<Entity>>" => ucfirst($metadata->name)),$bodyTemplate);
+        return $bodyTemplate;
     }
     
     public function getBodyView($metadata){
-        return $metadata->name;
+        $bodyTemplate = File::copyContent($this->templatesDir."viewMethod");
+        $bodyTemplate = GeneratorUtil::replaceAll(array("<<entity>>" => lcfirst($metadata->name)),$bodyTemplate);
+        return $bodyTemplate;
     }
     
     public function getBodyList($metadata){
-        return $metadata->name;
+        $bodyTemplate = File::copyContent($this->templatesDir."listMethod");
+        $bodyTemplate = GeneratorUtil::replaceAll(array("<<entity>>" => lcfirst($metadata->name),"<<Entity>>" => ucfirst($metadata->name)),$bodyTemplate);
+        return $bodyTemplate;
     }
     
     public function genEachClass(){
         foreach ($this->project->metadata as $metadata){
-            $class = GeneratorUtil::createClass($metadata->name."Controller","\Controller\Controller");
+            $class = GeneratorUtil::createClass($metadata->name."Controller","\Util\Controller");
             
             $methodNames = array("init", "postDispatch", "add","edit","del","view","list");
             foreach ($methodNames as $name) {
@@ -77,7 +107,7 @@ class Controller implements Generator{
     
     
     public function generate(){
-        $this->genController();
+        //$this->genController();
         $this->genEachClass();
     }
     

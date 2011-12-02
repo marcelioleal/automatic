@@ -1,16 +1,29 @@
 application:
-  configs:
+  conf:
   controllers:
   models:
     Entities:
     Mapper:
     BM:
+    Util:
   views:
+    layouts:
     helpers:
     scripts:
       error:
       index:
 docs:
+data:
+  sessions:
 library:
 public:
+  js:
+  images:
+  css:
 tests:
+  controllers:
+  models:
+    Entities:
+    Mapper:
+    BM:
+    Util:

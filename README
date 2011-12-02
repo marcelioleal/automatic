@@ -1,1 +1,36 @@
-Its a test!!!
+Automatic Generator
+
+----------------------------------
+Instruções de Instalação
+
+O Automatic em sua primeira versão utiliza:
+- Zend Framework Alpha 1
+- Doctrine Beta 2
+
+Para que você utilize as versões corretas, clique no link a seguir:
+http://marcelioleal.com/Zend2Doctrine2.zip
+
+Após baixar, os frameworks devem ficar em uma pasta library, no mesmo nível da pasta do seu projeto.
+
+Você pode modificar isto no arquivo <projeto>/public/index.php
+
+As outras dependências são:
+- MySQL (único banco testado até o momento, pode ser que funcione em outros que o Doctrine dê suporte)
+- Apache e mod_rewrite
+
+Baixe o automatic deste repositório e http://localhost/automatic
+
+
+---------------------------------------
+Problemas
+
+Enviar e-mail para:
+Marcelio Leal - marcelioleal@gmail.com
+ou
+Rafael Mauro - rmauro@gmail.com
+
+---------------------------------------
+Licença
+
+LGPL 
+Incompleto

@@ -4,4 +4,4 @@
               strict="true"
               verbose="true"
               colors="true"
-              bootstrap="tests/application/bootstrap.php">
+              bootstrap="tests/application/bootstrap.php" />

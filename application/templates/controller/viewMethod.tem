@@ -1,0 +1,7 @@
+        try{
+            $inputs = $this->getRequest()->getParams();
+            $id = $inputs['id'];
+            $this->view-><<entity>>  = \Mapper\MapperFactory::<<entity>>()->find($id);
+        }catch (Exception $e){
+            print $e->getMessage();
+        }
